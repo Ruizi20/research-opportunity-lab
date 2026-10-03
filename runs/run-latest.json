@@ -1,0 +1,719 @@
+{
+  "meta": {
+    "title": "How do platforms choose AI agent governance?",
+    "state": "Archived source-based run · 2026-09-12",
+    "scope": "In-house provision, open third-party access, and selective access",
+    "window": "Focus: March–September 2026; January events provide context",
+    "language": "en",
+    "translation_date": "2026-10-04",
+    "note": "English translation of the saved 2026-09-12 run, not a fresh search or independent source audit. Mechanisms and predictions are research conjectures. Scores are heuristic judgments, not probabilities."
+  },
+  "agents": [
+    {
+      "id": "intelligence",
+      "icon": "01",
+      "name": "News Radar",
+      "role": "11 news and policy items"
+    },
+    {
+      "id": "generation",
+      "icon": "02",
+      "name": "Mechanism Candidates",
+      "role": "6 competing explanations"
+    },
+    {
+      "id": "proximity",
+      "icon": "03",
+      "name": "Research Map",
+      "role": "3 research directions"
+    },
+    {
+      "id": "literature",
+      "icon": "04",
+      "name": "Related Literature",
+      "role": "5 closely related papers"
+    },
+    {
+      "id": "reflection",
+      "icon": "05",
+      "name": "Adversarial Review",
+      "role": "6 key concerns"
+    },
+    {
+      "id": "ranking",
+      "icon": "06",
+      "name": "Idea Ranking",
+      "role": "4 candidate directions"
+    },
+    {
+      "id": "evolution",
+      "icon": "07",
+      "name": "Idea Card",
+      "role": "1 conditional recommendation"
+    }
+  ],
+  "metrics": [
+    {
+      "value": "11",
+      "label": "News & policy"
+    },
+    {
+      "value": "6",
+      "label": "Mechanisms"
+    },
+    {
+      "value": "5",
+      "label": "Related papers"
+    },
+    {
+      "value": "1",
+      "label": "Conditional pick"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Google introduces the Universal Commerce Protocol",
+      "meta": "Company source · 2026-01-11 · An open protocol for discovery, purchasing, and post-purchase services",
+      "url": "https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/",
+      "category": "news"
+    },
+    {
+      "title": "Walmart × Google: shopping within Gemini",
+      "meta": "Company source · 2026-01-11 · Walmart and Sam's Club products connected through UCP",
+      "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+      "category": "news"
+    },
+    {
+      "title": "Amazon: Agent Policy effective March 4, 2026",
+      "meta": "Company source · External agents must identify themselves, comply with policies, and stop access when requested",
+      "url": "https://sellercentral.amazon.com/seller-forums/discussions/t/84e3f6b1-42f7-4cf3-a189-a5cc8d78d838",
+      "category": "news"
+    },
+    {
+      "title": "Amazon Seller Assistant",
+      "meta": "Company source · The saved September 8, 2026 record reports 230,000 monthly users and an acceptance rate above 90%",
+      "url": "https://sellingpartners.aboutamazon.com/seller-assistant",
+      "category": "news"
+    },
+    {
+      "title": "Shopify: Agentic Storefronts",
+      "meta": "Company source · 2026-03-24 · Millions of merchants can reach major AI channels",
+      "url": "https://www.shopify.com/news/agentic-commerce-momentum",
+      "category": "news"
+    },
+    {
+      "title": "Shopify opens agentic commerce to developers",
+      "meta": "Company source · 2026-06-17 · UCP and Catalog API access no longer requires approval",
+      "url": "https://www.shopify.com/news/spring-26-edition-dev",
+      "category": "news"
+    },
+    {
+      "title": "OpenAI expands product discovery and ACP in ChatGPT",
+      "meta": "Company source · 2026-03-24 · Product comparisons and high-intent traffic move into conversational interfaces",
+      "url": "https://openai.com/index/powering-product-discovery-in-chatgpt/",
+      "category": "news"
+    },
+    {
+      "title": "Visa launches Intelligent Commerce Connect",
+      "meta": "Company source · 2026-04-08 · A payment access layer for merchants and agents",
+      "url": "https://investor.visa.com/news/news-details/2026/Visa-Opens-the-Door-to-AI-Driven-Shopping-for-Businesses-Worldwide/",
+      "category": "news"
+    },
+    {
+      "title": "Google transfers AP2 to the FIDO Alliance",
+      "meta": "Company source · 2026-04-28 · Toward platform-neutral agent payment protocols",
+      "url": "https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/",
+      "category": "news"
+    },
+    {
+      "title": "FTC consultation on personalized pricing enforcement",
+      "meta": "Regulatory source · Updated 2026-08-31 · Comment deadline: 2026-09-18",
+      "url": "https://www.ftc.gov/news-events/news/press-releases/2026/08/ftc-seeks-comment-enforcement-policy-statement-regarding-personalized-pricing",
+      "category": "news"
+    },
+    {
+      "title": "European Commission: AI transparency requirements",
+      "meta": "Regulatory source · The saved record dates application of new transparency requirements to 2026-08-02",
+      "url": "https://commission.europa.eu/topics/artificial-intelligence_en",
+      "category": "news"
+    },
+    {
+      "title": "Teh (2022), Platform Governance",
+      "meta": "AEJ: Microeconomics · How platform rules, information, and recommendations affect seller competition",
+      "url": "https://www.aeaweb.org/articles?id=10.1257/mic.20190307",
+      "category": "literature"
+    },
+    {
+      "title": "Calvano et al. (2020), AI, Algorithmic Pricing, and Collusion",
+      "meta": "American Economic Review · Algorithms may learn to sustain supracompetitive prices",
+      "url": "https://www.aeaweb.org/articles?id=10.1257/aer.20190623",
+      "category": "literature"
+    },
+    {
+      "title": "Brown & MacKay (2023), Competition in Pricing Algorithms",
+      "meta": "AEJ: Microeconomics · Automated responses and pricing frequency affect competition",
+      "url": "https://www.nber.org/papers/w28860",
+      "category": "literature"
+    },
+    {
+      "title": "Greiner et al. (2025), Reliance on Algorithmic Advice",
+      "meta": "Management Science · Incentives and framing affect managers' reliance on algorithmic advice",
+      "url": "https://pubsonline.informs.org/doi/10.1287/mnsc.2022.02777",
+      "category": "literature"
+    },
+    {
+      "title": "Keppo et al. (2026), Trusting AI in Competitive Markets",
+      "meta": "arXiv preprint · AI pricing advice, trust learning, and competitive outcomes; closely related to generic pricing questions",
+      "url": "https://arxiv.org/abs/2608.26539",
+      "category": "literature"
+    }
+  ],
+  "stages": [
+    {
+      "id": "event",
+      "nav": "News Radar",
+      "meta": "11 → 1",
+      "agent": "intelligence",
+      "kicker": "2026 NEWS WATCHLIST",
+      "title": "News watchlist: 11 changes worth following",
+      "summary": "Open protocols, platform access, agent payments, personalized pricing, and AI transparency. Each item links to a company or regulatory source recorded in the original run.",
+      "callout": "Selected comparison: Amazon and Shopify combine in-house capabilities, third-party access, and permission controls differently. Neither is simply fully open or fully closed.",
+      "sourceCategory": "news",
+      "evidenceTitle": "News sources",
+      "cards": [
+        {
+          "title": "Google introduces the Universal Commerce Protocol",
+          "source": "Google",
+          "date": "2026-01-11",
+          "url": "https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/",
+          "text": "Google, with Shopify, Etsy, Wayfair, Target, and Walmart, introduces an open commerce protocol covering discovery, purchasing, and post-purchase services, compatible with A2A, AP2, and MCP.",
+          "signal": "Could control over open standards redistribute bargaining power among platforms, merchants, and payment providers?",
+          "tags": [
+            "Open protocols",
+            "Ecosystem governance"
+          ],
+          "score": 88
+        },
+        {
+          "title": "Walmart products enter Gemini",
+          "source": "Walmart",
+          "date": "2026-01-11",
+          "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+          "text": "Walmart and Sam's Club products are set to enter Gemini through UCP, moving the shopping entry point from retail websites to a general-purpose AI interface.",
+          "signal": "When transactions begin on an AI platform, who controls customer relationships, recommendations, and data?",
+          "tags": [
+            "Channel shift",
+            "Recommendation control"
+          ],
+          "score": 84
+        },
+        {
+          "title": "Amazon's Agent Policy takes effect",
+          "source": "Amazon",
+          "date": "2026-03-04",
+          "url": "https://sellercentral.amazon.com/seller-forums/discussions/t/84e3f6b1-42f7-4cf3-a189-a5cc8d78d838",
+          "text": "Amazon requires automated agents accessing services on sellers' behalf to identify themselves and comply with policies; it may require them to stop accessing its services.",
+          "signal": "When do platforms treat third-party agents as complementary innovators, and when as entrants requiring control?",
+          "tags": [
+            "Access rules",
+            "Platform control",
+            "Selected"
+          ],
+          "score": 93
+        },
+        {
+          "title": "Amazon expands Seller Assistant",
+          "source": "Amazon",
+          "date": "2026-09-08",
+          "url": "https://sellingpartners.aboutamazon.com/seller-assistant",
+          "text": "Amazon reports that Seller Assistant supports operational advice, diagnosis, and action planning, with 230,000 monthly users in the saved source record.",
+          "signal": "When a platform both sets market rules and advises sellers, are its objectives aligned with sellers' interests?",
+          "tags": [
+            "In-house agents",
+            "Agency conflict",
+            "Selected"
+          ],
+          "score": 94
+        },
+        {
+          "title": "Shopify launches Agentic Storefronts",
+          "source": "Shopify",
+          "date": "2026-03-24",
+          "url": "https://www.shopify.com/news/agentic-commerce-momentum",
+          "text": "Shopify connects millions of merchants' products, inventory, and prices to AI channels such as ChatGPT while retaining merchant fulfillment relationships.",
+          "signal": "Does access to multiple AI channels increase merchant reach or create new dependence on intermediaries?",
+          "tags": [
+            "Multiple channels",
+            "Merchant relationships",
+            "Selected"
+          ],
+          "score": 90
+        },
+        {
+          "title": "Shopify opens UCP and the Catalog API",
+          "source": "Shopify",
+          "date": "2026-06-17",
+          "url": "https://www.shopify.com/news/spring-26-edition-dev",
+          "text": "Developers can use UCP and the Catalog API without applying for approval and submit agent profiles through a public MCP endpoint.",
+          "signal": "Can lower entry barriers support specialized agents and pressure closed platforms to change their policies?",
+          "tags": [
+            "Developer access",
+            "Ecosystem innovation",
+            "Selected"
+          ],
+          "score": 92
+        },
+        {
+          "title": "ChatGPT expands product discovery and comparison",
+          "source": "OpenAI",
+          "date": "2026-03-24",
+          "url": "https://openai.com/index/powering-product-discovery-in-chatgpt/",
+          "text": "ChatGPT extends ACP to product discovery, supporting visual browsing, side-by-side comparisons, and more timely product information.",
+          "signal": "How could AI-interface rankings affect brand exposure, price competition, and search advertising?",
+          "tags": [
+            "Product discovery",
+            "Ranking rules"
+          ],
+          "score": 86
+        },
+        {
+          "title": "Visa launches Intelligent Commerce Connect",
+          "source": "Visa",
+          "date": "2026-04-08",
+          "url": "https://investor.visa.com/news/news-details/2026/Visa-Opens-the-Door-to-AI-Driven-Shopping-for-Businesses-Worldwide/",
+          "text": "Visa offers an access layer for agent developers, merchants, and payment providers and begins initial partner pilots.",
+          "signal": "Could identity, authorization, and payment liability become bottlenecks or entry barriers in agentic commerce?",
+          "tags": [
+            "Agent payments",
+            "Trust infrastructure"
+          ],
+          "score": 82
+        },
+        {
+          "title": "Google transfers AP2 to the FIDO Alliance",
+          "source": "Google",
+          "date": "2026-04-28",
+          "url": "https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/",
+          "text": "Google transfers governance of the Agent Payments Protocol to the FIDO Alliance and adds authorization capabilities for unattended transactions.",
+          "signal": "Why would a firm relinquish protocol control? Could neutral governance accelerate ecosystem adoption?",
+          "tags": [
+            "Standards governance",
+            "Platform neutrality"
+          ],
+          "score": 85
+        },
+        {
+          "title": "EU AI transparency requirements begin to apply",
+          "source": "European Commission",
+          "date": "2026-08-02",
+          "url": "https://commission.europa.eu/topics/artificial-intelligence_en",
+          "text": "The saved record describes transparency requirements for specified AI systems and AI-generated content, with implications for interfaces and disclosure design.",
+          "signal": "Does disclosing AI involvement improve trust or reduce advice adoption and conversion?",
+          "tags": [
+            "Policy implementation",
+            "Disclosure"
+          ],
+          "score": 78
+        },
+        {
+          "title": "FTC seeks comments on personalized pricing enforcement",
+          "source": "FTC",
+          "date": "2026-08-31",
+          "url": "https://www.ftc.gov/news-events/news/press-releases/2026/08/ftc-seeks-comment-enforcement-policy-statement-regarding-personalized-pricing",
+          "text": "The saved record describes an FTC consultation on potential legal risks from undisclosed use of personal data in personalized pricing, with comments due September 18, 2026.",
+          "signal": "How does regulatory uncertainty affect firms' use of consumer data and personalized prices?",
+          "tags": [
+            "Regulatory signal",
+            "Personalized pricing"
+          ],
+          "score": 81
+        }
+      ]
+    },
+    {
+      "id": "generate",
+      "nav": "Mechanisms",
+      "meta": "1 → 6",
+      "agent": "generation",
+      "kicker": "6 CANDIDATE MECHANISMS",
+      "title": "What conditions favor each governance mode?",
+      "summary": "Six candidate mechanisms predict in-house provision, open access, or selective access.",
+      "callout": "The question is not simply open versus closed: it is how platforms balance control benefits, external innovation, and safety risks.",
+      "sourceCategory": "news",
+      "evidenceTitle": "Event evidence",
+      "cards": [
+        {
+          "title": "H1 · Data advantages favor in-house provision",
+          "text": "More distinctive transaction, fulfillment, and user data may improve an in-house agent's predictions and strengthen the incentive to retain decision capabilities internally.",
+          "tags": [
+            "Prediction: in-house",
+            "Data advantage"
+          ],
+          "score": 91
+        },
+        {
+          "title": "H2 · Complementary-service profits favor in-house provision",
+          "text": "When advertising, logistics, or payment services are profitable, an in-house agent can coordinate recommendations and service adoption, potentially favoring internal provision.",
+          "tags": [
+            "Prediction: in-house",
+            "Incentive alignment"
+          ],
+          "score": 89
+        },
+        {
+          "title": "H3 · External innovation favors open access",
+          "text": "Greater third-party expertise and innovation efficiency increase the value of tool variety and may favor access by multiple agents.",
+          "tags": [
+            "Prediction: open",
+            "Ecosystem innovation"
+          ],
+          "score": 92
+        },
+        {
+          "title": "H4 · Merchant heterogeneity favors open access",
+          "text": "A single platform agent may struggle to serve heterogeneous needs. Specialized third-party agents can match different industries, firm sizes, and operating objectives.",
+          "tags": [
+            "Prediction: open",
+            "Specialization"
+          ],
+          "score": 87
+        },
+        {
+          "title": "H5 · Risk favors selective access",
+          "text": "When external innovation is valuable but execution errors, data leakage, and liability are substantial, certification, tiered permissions, and audits may outperform either unrestricted access or exclusive in-house provision.",
+          "tags": [
+            "Prediction: selective",
+            "Safety governance"
+          ],
+          "score": 94
+        },
+        {
+          "title": "H6 · Platform competition favors openness commitments",
+          "text": "When platforms compete for merchants, admitting third-party agents may credibly reduce lock-in, expand choice, and attract merchants.",
+          "tags": [
+            "Prediction: open",
+            "Platform competition"
+          ],
+          "score": 84
+        }
+      ]
+    },
+    {
+      "id": "cluster",
+      "nav": "Research Map",
+      "meta": "6 → 3 trade-offs",
+      "agent": "proximity",
+      "kicker": "3 RESEARCH DIRECTIONS",
+      "title": "Three trade-offs shape governance choices",
+      "summary": "Control and internalization, ecosystem innovation and matching, and safety and liability are three dimensions of institutional choice.",
+      "callout": "Selective access is a distinct regime: certification, permissions, and audits enable external innovation while retaining key controls.",
+      "sourceCategory": "news",
+      "evidenceTitle": "Event evidence",
+      "cards": [
+        {
+          "title": "Trade-off A · Control and internalization",
+          "text": "Data advantages and complementary-service profits raise the value of in-house provision and control over agent objectives, default recommendations, and data feedback.",
+          "tags": [
+            "H1",
+            "H2",
+            "In-house"
+          ],
+          "score": 93
+        },
+        {
+          "title": "Trade-off B · Innovation and ecosystem scale",
+          "text": "Third-party innovation, specialized matching, and competition for merchants raise the value of openness. A platform trades some control for a richer ecosystem.",
+          "tags": [
+            "H3",
+            "H4",
+            "H6",
+            "Open"
+          ],
+          "score": 95
+        },
+        {
+          "title": "Trade-off C · Risk and reliable execution",
+          "text": "Operational errors, privacy breaches, and liability raise the cost of access. Certification and tiered permissions screen third parties while preserving innovation.",
+          "tags": [
+            "H5",
+            "Selective"
+          ],
+          "score": 94
+        },
+        {
+          "title": "Unifying question",
+          "text": "When does a platform choose in-house provision, open access, or selective access? Compare control benefits, innovation value, and risk-management capabilities across regimes.",
+          "tags": [
+            "Institutional choice",
+            "Three regimes"
+          ],
+          "score": 97
+        }
+      ]
+    },
+    {
+      "id": "literature",
+      "nav": "Literature",
+      "meta": "5 related papers",
+      "agent": "literature",
+      "kicker": "5 CLOSEST PAPERS",
+      "title": "From related findings to a provisional research question",
+      "summary": "Platform governance, algorithmic pricing, and advice adoption have close precedents. Price effects or adoption alone may offer limited novelty.",
+      "callout": "Provisional opportunity: compare in-house provision, open access, and selective access in one model of endogenous platform governance. This is a search-dependent conjecture, not an established gap.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Related literature",
+      "cards": [
+        {
+          "title": "Teh (2022) · Platform Governance",
+          "text": "The saved audit connects this paper's account of rules, information, and recommendations to seller competition. It proposes agent provision and certified access as a possible extension requiring further overlap checks.",
+          "tags": [
+            "Conceptual neighbor",
+            "Moderate overlap"
+          ],
+          "score": 72
+        },
+        {
+          "title": "Calvano et al. (2020) · Algorithmic Pricing",
+          "text": "Autonomous pricing algorithms can sustain supracompetitive prices. Price convergence or collusion alone is therefore unlikely to establish a distinctive contribution.",
+          "tags": [
+            "Mechanism neighbor",
+            "High overlap"
+          ],
+          "score": 43
+        },
+        {
+          "title": "Brown & MacKay (2023) · Pricing Algorithms",
+          "text": "Automated responses and pricing frequency affect price levels and dispersion. Changes in prices following openness are outcomes to explain, not by themselves a novel contribution.",
+          "tags": [
+            "Empirical neighbor",
+            "High overlap"
+          ],
+          "score": 46
+        },
+        {
+          "title": "Greiner et al. (2025) · Algorithmic Advice",
+          "text": "Incentive contracts and the framing of AI affect managers' adoption of advice. The saved audit treats this as a foundation for seller reliance and flags the advice provider's strategic objectives for closer comparison.",
+          "tags": [
+            "Behavioral neighbor",
+            "Potential connection"
+          ],
+          "score": 76
+        },
+        {
+          "title": "Keppo et al. (2026) · Trusting AI in Competitive Markets",
+          "text": "This preprint is recorded as directly studying AI pricing advice, trust learning, and competition. The original audit therefore rejects a generic question about whether AI advice changes prices.",
+          "tags": [
+            "Preprint",
+            "Requires reframing"
+          ],
+          "score": 38
+        },
+        {
+          "title": "Provisional differentiation",
+          "text": "The original search did not identify a paper directly modeling endogenous choice among all three regimes. This is a preliminary search result, not proof of novelty; a dedicated follow-up search remains necessary.",
+          "tags": [
+            "Three-regime choice",
+            "Conditional gap"
+          ],
+          "score": 84
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "nav": "Peer Review",
+      "meta": "6 concerns",
+      "agent": "reflection",
+      "kicker": "6 REVIEWER CONCERNS",
+      "title": "Reviewer: governance is endogenous and multidimensional",
+      "summary": "Key concerns include regime classification, platform heterogeneity, bundled policies, data visibility, and what agents add beyond ordinary recommendation systems.",
+      "callout": "Amazon and Shopify cannot be treated as closed and open treatment groups. Both may use mixed governance, and their choices reflect their own characteristics.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Review context",
+      "cards": [
+        {
+          "title": "Major 1 · Open versus closed is insufficient",
+          "text": "A platform may provide its own agent, open some interfaces, and restrict high-risk actions simultaneously. Define governance through entry, data, permissions, review, and liability.",
+          "tags": [
+            "Construct definition",
+            "Major"
+          ],
+          "score": 18
+        },
+        {
+          "title": "Major 2 · Governance is endogenous",
+          "text": "Data advantages, revenue models, merchant heterogeneity, and risk exposure jointly affect governance and outcomes. Cross-platform differences alone do not identify causal effects.",
+          "tags": [
+            "Endogenous choice",
+            "Major"
+          ],
+          "score": 16
+        },
+        {
+          "title": "Major 3 · Policies change together",
+          "text": "Agent-access changes often coincide with recommendation, payment, advertising, or data-policy changes. A single event may not isolate the effect of governance.",
+          "tags": [
+            "Bundled policies",
+            "Identification"
+          ],
+          "score": 25
+        },
+        {
+          "title": "Major 4 · Key behavior is unobserved",
+          "text": "External researchers typically cannot observe agent advice, permissions, adoption, or execution logs. An empirical study may require a data partnership or an experimental alternative.",
+          "tags": [
+            "Data access",
+            "Major"
+          ],
+          "score": 28
+        },
+        {
+          "title": "Alternative explanation · Safety, not self-preferencing",
+          "text": "Restrictions may prevent execution errors, data leakage, and spillover liability. The model must allow genuine safety benefits rather than assume the platform's motives.",
+          "tags": [
+            "Competing mechanism",
+            "Retain"
+          ],
+          "score": 91
+        },
+        {
+          "title": "Feasible revision",
+          "text": "Use a three-regime theoretical model to explain governance choice, then controlled experiments to test objective conflicts and permission design. Platform news motivates the question but does not identify causal effects.",
+          "tags": [
+            "Theory + experiment",
+            "Retain"
+          ],
+          "score": 92
+        }
+      ]
+    },
+    {
+      "id": "rank",
+      "nav": "Idea Ranking",
+      "meta": "4 → 1",
+      "agent": "ranking",
+      "kicker": "4 IDEAS · 1 SURVIVES",
+      "title": "Governance choice ranks first among four candidates",
+      "summary": "The three-regime question combines observed variation with theoretical trade-offs and candidate comparative statics. Price and capability effects become secondary outcomes.",
+      "callout": "Ask why platforms choose different institutions; do not interpret cross-platform outcome differences as causal effects of openness.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Comparison context",
+      "cards": [
+        {
+          "title": "#1 In-house, open, or selective access?",
+          "text": "A common model of platform control, ecosystem innovation, and safety risk could yield distinct equilibrium regimes and testable shifts in their boundaries.",
+          "tags": [
+            "Retain",
+            "Conditional go"
+          ],
+          "score": 91
+        },
+        {
+          "title": "#2 How do an agent provider's objectives shape advice?",
+          "text": "Objective conflicts are clear and experimentally tractable, but explain downstream consequences rather than the platform's choice of regime.",
+          "tags": [
+            "Retain as mechanism",
+            "Experimental fit"
+          ],
+          "score": 78
+        },
+        {
+          "title": "#3 Does openness narrow merchant capability gaps?",
+          "text": "The managerial relevance is clear, but adoption and developer entry are endogenous. Treat this as an extension involving merchant heterogeneity.",
+          "tags": [
+            "Extension",
+            "Data challenge"
+          ],
+          "score": 69
+        },
+        {
+          "title": "#4 Does AI advice lead to price convergence?",
+          "text": "Testable, but closely related to algorithmic pricing, competitive responses, and trust in AI advice. Do not retain it as the core question.",
+          "tags": [
+            "Reject",
+            "High literature overlap"
+          ],
+          "score": 48
+        }
+      ]
+    },
+    {
+      "id": "evolve",
+      "nav": "Idea Card",
+      "meta": "Conditional go",
+      "agent": "evolution",
+      "kicker": "CONDITIONAL GO",
+      "title": "Proposed study: platform choice of agent governance",
+      "summary": "The object of study is the platform's choice among three regimes. Amazon and Shopify motivate the question rather than identify its causal effects.",
+      "callout": "CONDITIONAL GO: first test whether a three-regime model yields distinct equilibrium regions; only then commit to data collection or experiments.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Core references",
+      "cards": [
+        {
+          "title": "Research puzzle",
+          "text": "Under what conditions does a platform choose in-house agents, open third-party access, or selective access? How do these regimes distribute value among platforms, developers, and merchants?",
+          "tags": [
+            "Institutional choice",
+            "Three regimes"
+          ],
+          "score": 97
+        },
+        {
+          "title": "Three candidate regimes",
+          "text": "In-house: the platform controls the model, data, and permissions. Open: eligible developers may enter freely. Selective: certification, tiered permissions, and audits screen third-party agents.",
+          "tags": [
+            "In-house",
+            "Open",
+            "Selective"
+          ],
+          "score": 96
+        },
+        {
+          "title": "Minimal theoretical model",
+          "text": "Stage 1: the platform selects governance. Stage 2: third parties decide whether to enter and invest in innovation. Stage 3: merchants select agents and act. Platform payoffs include transactions, complementary services, and data, net of governance and safety costs.",
+          "tags": [
+            "Three-stage game",
+            "Endogenous entry"
+          ],
+          "score": 92
+        },
+        {
+          "title": "Conjectured regime predictions",
+          "text": "Data advantages or complementary-service profits may favor in-house provision; third-party innovation or merchant heterogeneity may favor openness. Valuable innovation with high risk and effective screening may favor selective access. These predictions remain to be derived.",
+          "tags": [
+            "Comparative statics",
+            "Falsifiable"
+          ],
+          "score": 94
+        },
+        {
+          "title": "Conjectured downstream predictions",
+          "text": "Holding information and accuracy fixed, in-house agents may recommend more platform services; open access may increase specialization; selective access may reduce tail risks but also discourage third-party investment.",
+          "tags": [
+            "Seller behavior",
+            "Innovation incentives"
+          ],
+          "score": 89
+        },
+        {
+          "title": "Research design",
+          "text": "Use theory to explain regime choice. Randomize the agent provider, objective alignment, and execution permissions in controlled experiments to test downstream mechanisms. Platform news provides motivation, not cross-platform causal identification.",
+          "tags": [
+            "Theoretical model",
+            "Controlled experiment"
+          ],
+          "score": 91
+        },
+        {
+          "title": "No-go checks",
+          "text": "Stop if the regimes do not produce distinct equilibrium regions, agents introduce no delegation or execution features beyond ordinary APIs or recommendations, or a dedicated search finds the same institutional-choice problem already fully studied.",
+          "tags": [
+            "Stopping rules",
+            "Further literature audit"
+          ],
+          "score": 95
+        }
+      ]
+    }
+  ]
+}

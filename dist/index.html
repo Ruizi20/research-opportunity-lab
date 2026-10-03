@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trace real-world signals, challenge competing explanations, and evaluate research opportunities.">
+  <title>Research Opportunity Lab</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23091420'/%3E%3Cpath d='M14 42 26 30l8 7 16-18' fill='none' stroke='%235ce1e6' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='50' cy='19' r='5' fill='%23ffb454'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07101b;
+      --panel: #0d1926;
+      --panel-2: #112132;
+      --line: #23374b;
+      --text: #f4f7fb;
+      --muted: #9eb0c1;
+      --cyan: #5ce1e6;
+      --orange: #ffb454;
+      --green: #77dda1;
+      --red: #ff7e88;
+      --blue: #78a8ff;
+      --shadow: 0 24px 64px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+    html { font-size: 16px; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 88% -10%, rgba(92,225,230,.15), transparent 34rem),
+        radial-gradient(circle at -8% 30%, rgba(120,168,255,.11), transparent 30rem),
+        var(--bg);
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+    a { color: var(--cyan); }
+    .shell { max-width: 1500px; margin: 0 auto; padding: 28px; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+    .eyebrow {
+      color: var(--cyan);
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    h1 { margin: 0; font-size: clamp(1.55rem, 2.5vw, 2.5rem); letter-spacing: -.035em; }
+    .subtitle { margin: 8px 0 0; max-width: 760px; color: var(--muted); line-height: 1.6; }
+    .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    a.btn { display: inline-flex; align-items: center; text-decoration: none; }
+    .edition-note { color: var(--muted); font-size: .82rem; line-height: 1.55; margin: 0 0 20px; max-width: 1100px; }
+    .actions { max-width: 490px; flex-shrink: 0; }
+    .topbar { flex-wrap: wrap; }
+    .step-label, .step-meta { white-space: normal; overflow-wrap: anywhere; }
+    .btn:hover { transform: translateY(-1px); border-color: #45627d; background: var(--panel-2); }
+    .btn.primary { background: var(--cyan); color: #062025; border-color: var(--cyan); font-weight: 750; }
+    .file-input { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; opacity: 0; }
+
+    .framework-map {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(92,225,230,.07), transparent 32%),
+        rgba(13,25,38,.9);
+      box-shadow: var(--shadow);
+      padding: 17px 18px 18px;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    .framework-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+    .framework-kicker { color: var(--cyan); font-size: .68rem; font-weight: 850; letter-spacing: .15em; }
+    .framework-head h2 { margin: 4px 0 0; font-size: 1.05rem; letter-spacing: -.01em; }
+    .framework-caption { margin: 0; max-width: 680px; color: var(--muted); font-size: .77rem; line-height: 1.5; text-align: right; }
+    .framework-scroll { overflow-x: auto; padding-bottom: 2px; }
+    .framework-flow {
+      display: grid;
+      grid-template-columns: 118px 18px 126px 18px 150px 18px minmax(300px, 1fr) 18px 140px;
+      align-items: stretch;
+      min-width: 900px;
+    }
+    .flow-arrow { display: grid; place-items: center; color: #58748b; font-size: 1.15rem; font-weight: 900; }
+    .flow-node {
+      min-height: 146px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0b1723;
+      padding: 12px;
+      position: relative;
+    }
+    .flow-node::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      border-radius: 12px 0 0 12px;
+      background: var(--node-accent, var(--cyan));
+    }
+    .flow-label { color: var(--muted); font-size: .58rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    .flow-title { margin-top: 6px; font-size: .86rem; font-weight: 800; line-height: 1.25; }
+    .flow-note { margin-top: 7px; color: var(--muted); font-size: .68rem; line-height: 1.42; }
+    .flow-node.supervisor { --node-accent: var(--blue); background: rgba(120,168,255,.07); }
+    .flow-node.evidence-layer { --node-accent: var(--cyan); background: rgba(92,225,230,.055); }
+    .flow-node.hypothesis-loop { --node-accent: var(--orange); background: rgba(255,180,84,.045); }
+    .flow-node.output { --node-accent: var(--green); background: rgba(119,221,161,.055); }
+    .agent-chain {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      margin-top: 9px;
+    }
+    .agent-chip {
+      min-height: 38px;
+      display: grid;
+      place-items: center;
+      padding: 5px 4px;
+      border: 1px solid rgba(255,180,84,.23);
+      border-radius: 7px;
+      background: rgba(255,180,84,.06);
+      color: #f5dcc0;
+      text-align: center;
+      font-size: .58rem;
+      font-weight: 760;
+      line-height: 1.2;
+    }
+    .loop-return { margin-top: 7px; color: var(--orange); font-size: .62rem; text-align: center; letter-spacing: .02em; }
+    .framework-principle {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+      color: #b9c9d7;
+      font-size: .67rem;
+    }
+    .principle-line { width: 88px; height: 1px; background: linear-gradient(90deg, transparent, #3c5c74); }
+    .principle-line:last-child { transform: scaleX(-1); }
+
+    .statusline {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(13,25,38,.86);
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(110px, 1fr));
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: 18px;
+    }
+    .step {
+      position: relative;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      padding: 9px 8px 10px 30px;
+      min-width: 118px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .step::before {
+      content: attr(data-num);
+      position: absolute;
+      left: 3px;
+      top: 8px;
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-size: .72rem;
+    }
+    .step.active { color: var(--text); }
+    .step.active::before { color: #062025; background: var(--cyan); border-color: var(--cyan); font-weight: 800; }
+    .step.done::before { content: "✓"; color: var(--green); border-color: rgba(119,221,161,.55); }
+    .step-label { display: block; font-size: .86rem; font-weight: 700; white-space: nowrap; }
+    .step-meta { display: block; font-size: .72rem; margin-top: 3px; opacity: .68; white-space: nowrap; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 310px;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(13,25,38,.92);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 15px 17px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .panel-head h2 { font-size: .93rem; margin: 0; letter-spacing: .01em; }
+    .pill { padding: 5px 8px; border-radius: 999px; background: #16283a; color: var(--muted); font-size: .72rem; }
+
+    .agents { padding: 10px; }
+    .agent {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      padding: 11px 9px;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .agent.current { background: #132638; border-color: #2b5066; }
+    .agent-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #172a3d;
+      color: var(--cyan);
+      font-weight: 850;
+    }
+    .agent-name { font-size: .86rem; font-weight: 750; line-height: 1.3; }
+    .agent-status { color: var(--muted); font-size: .73rem; margin-top: 3px; line-height: 1.35; }
+
+    .stage-body { padding: 21px; min-height: 570px; }
+    .stage-kicker { color: var(--cyan); font-size: .76rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .stage-title { margin: 8px 0 8px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -.025em; }
+    .stage-summary { margin: 0 0 20px; color: var(--muted); line-height: 1.62; max-width: 830px; }
+    .callout {
+      border-left: 3px solid var(--orange);
+      background: rgba(255,180,84,.08);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px;
+      line-height: 1.55;
+      margin: 0 0 18px;
+      color: #f8dcc0;
+    }
+    .card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      border-radius: 13px;
+      padding: 15px;
+    }
+    .card h3 { margin: 0 0 8px; font-size: .94rem; }
+    .card h3 a { color: var(--text); text-decoration: none; }
+    .card h3 a:hover { color: var(--cyan); text-decoration: underline; }
+    .card-meta { margin: -2px 0 9px; color: var(--cyan); font-size: .71rem; font-weight: 700; letter-spacing: .02em; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.55; font-size: .86rem; }
+    .research-signal { margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--line); color: #f5d1a3; font-size: .79rem; line-height: 1.5; }
+    .research-signal strong { color: var(--orange); }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+    .tag { font-size: .71rem; padding: 5px 7px; border-radius: 7px; background: #192e43; color: #bfd2e4; }
+    .tag.warn { background: rgba(255,180,84,.13); color: var(--orange); }
+    .tag.good { background: rgba(119,221,161,.12); color: var(--green); }
+    .tag.bad { background: rgba(255,126,136,.12); color: var(--red); }
+    .scoreline { display: flex; align-items: center; gap: 9px; margin-top: 12px; }
+    .bar { flex: 1; height: 6px; border-radius: 99px; background: #07121f; overflow: hidden; }
+    .bar > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+    .score { color: var(--cyan); font-weight: 800; font-size: .82rem; }
+
+    .evidence { padding: 12px 14px 16px; }
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 14px; }
+    .metric { border: 1px solid var(--line); border-radius: 11px; padding: 11px; background: #0b1723; }
+    .metric-value { font-size: 1.35rem; font-weight: 850; color: var(--cyan); }
+    .metric-label { color: var(--muted); font-size: .7rem; margin-top: 3px; }
+    .source-list { display: grid; gap: 9px; }
+    .source { padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #0b1723; }
+    .source-title { font-size: .79rem; font-weight: 700; line-height: 1.4; }
+    .source-title a { color: var(--text); text-decoration: none; }
+    .source-title a:hover { color: var(--cyan); text-decoration: underline; }
+    .source-meta { margin-top: 4px; color: var(--muted); font-size: .69rem; line-height: 1.4; }
+    .legend { margin-top: 14px; color: var(--muted); font-size: .72rem; line-height: 1.55; }
+
+    .footer-note { margin-top: 16px; color: #8499ab; font-size: .76rem; text-align: center; }
+    .fade { animation: fade .28s ease both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 1080px) {
+      .workspace { grid-template-columns: 220px 1fr; }
+      .evidence-panel { grid-column: 1 / -1; }
+      .source-list { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .shell { padding: 16px; }
+      .topbar { flex-direction: column; }
+      .actions { justify-content: flex-start; }
+      .framework-head { align-items: flex-start; flex-direction: column; gap: 7px; }
+      .framework-caption { text-align: left; }
+      .workspace { grid-template-columns: 1fr; }
+      .agent-panel { order: 2; }
+      .evidence-panel { order: 3; grid-column: auto; }
+      .stage-panel { order: 1; }
+      .card-grid, .source-list { grid-template-columns: 1fr; }
+      .stage-body { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">RESEARCH OPPORTUNITY RADAR</div>
+        <h1>Agentic Commerce · Research Lab</h1>
+        <p class="subtitle">US & Europe · Archived research run: September 12, 2026 · English edition</p>
+      </div>
+      <div class="actions">
+        <button id="playBtn" class="btn primary">▶ Play walkthrough</button>
+        <label class="btn" for="fileInput">Import run</label>
+        <input id="fileInput" class="file-input" type="file" accept="application/json,.json">
+        <button id="resetBtn" class="btn">Reset</button>
+        <a class="btn" href="README.md" target="_blank" rel="noopener">Read setup guide</a>
+      </div>
+    </header>
+
+    <p class="edition-note">This dashboard presents a saved research record, not a live AI service. The English edition preserves the original sources and dates; they have not been re-audited for this translation. Hypotheses are conjectures, and scores are heuristic judgments—not probabilities. Use the source package to run a new study with your own research agent.</p>
+
+    <section class="framework-map" aria-labelledby="frameworkTitle">
+      <div class="framework-head">
+        <div>
+          <div class="framework-kicker">MULTI-AGENT RESEARCH LOGIC</div>
+          <h2 id="frameworkTitle">How the Framework Works</h2>
+        </div>
+        <p class="framework-caption">Evidence enters first. A Supervisor coordinates specialized agents that generate, challenge, rank and evolve research hypotheses.</p>
+      </div>
+
+      <div class="framework-scroll">
+        <div class="framework-flow" role="img" aria-label="A research brief enters a supervisor, which coordinates a verified evidence layer and an iterative hypothesis loop before producing a research decision package.">
+          <div class="flow-node input">
+            <div class="flow-label">Human input</div>
+            <div class="flow-title">Scientist &amp;<br>Research Brief</div>
+            <div class="flow-note">Domain, time window, geography and decision criteria</div>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <div class="flow-node supervisor">
+            <div class="flow-label">Core coordinator</div>
+            <div class="flow-title">Supervisor</div>
+            <div class="flow-note">Decomposes the task, assigns agents and decides when to continue or stop</div>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <div class="flow-node evidence-layer">
+            <div class="flow-label">Local extension</div>
+            <div class="flow-title">Verified Evidence Layer</div>
+            <div class="flow-note">Research Intelligence ×3 → primary sources → deduplicated event pool</div>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <div class="flow-node hypothesis-loop">
+            <div class="flow-label">Core co-scientist loop</div>
+            <div class="flow-title">Iterative Hypothesis Competition</div>
+            <div class="agent-chain" aria-hidden="true">
+              <div class="agent-chip">Generate</div>
+              <div class="agent-chip">Literature<br>&amp; Proximity</div>
+              <div class="agent-chip">Reflect</div>
+              <div class="agent-chip">Rank</div>
+              <div class="agent-chip">Evolve</div>
+              <div class="agent-chip">Meta-review</div>
+            </div>
+            <div class="loop-return">↺ Critique, rejected ideas and evidence gaps feed the next cycle</div>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <div class="flow-node output">
+            <div class="flow-label">Research decision</div>
+            <div class="flow-title">Research Idea Card</div>
+            <div class="flow-note">Mechanism, testable hypotheses, evidence trail, risks and stop conditions</div>
+          </div>
+        </div>
+      </div>
+      <div class="framework-principle">
+        <span class="principle-line" aria-hidden="true"></span>
+        <span>Human judgment guides the Supervisor at every cycle</span>
+        <span class="principle-line" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <nav id="statusline" class="statusline" aria-label="Research workflow stages"></nav>
+
+    <section class="workspace">
+      <aside class="panel agent-panel">
+        <div class="panel-head">
+          <h2>Research roles</h2>
+          <span id="agentCount" class="pill">7 roles</span>
+        </div>
+        <div id="agents" class="agents"></div>
+      </aside>
+
+      <article class="panel stage-panel">
+        <div class="panel-head">
+          <h2 id="runTitle">Current topic</h2>
+          <span id="runState" class="pill">Saved case study</span>
+        </div>
+        <div id="stageBody" class="stage-body"></div>
+      </article>
+
+      <aside class="panel evidence-panel">
+        <div class="panel-head">
+          <h2 id="evidenceTitle">Related sources</h2>
+          <span class="pill">Original sources</span>
+        </div>
+        <div class="evidence">
+          <div id="metrics" class="metric-grid"></div>
+          <div id="sources" class="source-list"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const demoRun = {
+  "meta": {
+    "title": "How do platforms choose AI agent governance?",
+    "state": "Archived source-based run · 2026-09-12",
+    "scope": "In-house provision, open third-party access, and selective access",
+    "window": "Focus: March–September 2026; January events provide context",
+    "language": "en",
+    "translation_date": "2026-10-04",
+    "note": "English translation of the saved 2026-09-12 run, not a fresh search or independent source audit. Mechanisms and predictions are research conjectures. Scores are heuristic judgments, not probabilities."
+  },
+  "agents": [
+    {
+      "id": "intelligence",
+      "icon": "01",
+      "name": "News Radar",
+      "role": "11 news and policy items"
+    },
+    {
+      "id": "generation",
+      "icon": "02",
+      "name": "Mechanism Candidates",
+      "role": "6 competing explanations"
+    },
+    {
+      "id": "proximity",
+      "icon": "03",
+      "name": "Research Map",
+      "role": "3 research directions"
+    },
+    {
+      "id": "literature",
+      "icon": "04",
+      "name": "Related Literature",
+      "role": "5 closely related papers"
+    },
+    {
+      "id": "reflection",
+      "icon": "05",
+      "name": "Adversarial Review",
+      "role": "6 key concerns"
+    },
+    {
+      "id": "ranking",
+      "icon": "06",
+      "name": "Idea Ranking",
+      "role": "4 candidate directions"
+    },
+    {
+      "id": "evolution",
+      "icon": "07",
+      "name": "Idea Card",
+      "role": "1 conditional recommendation"
+    }
+  ],
+  "metrics": [
+    {
+      "value": "11",
+      "label": "News & policy"
+    },
+    {
+      "value": "6",
+      "label": "Mechanisms"
+    },
+    {
+      "value": "5",
+      "label": "Related papers"
+    },
+    {
+      "value": "1",
+      "label": "Conditional pick"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Google introduces the Universal Commerce Protocol",
+      "meta": "Company source · 2026-01-11 · An open protocol for discovery, purchasing, and post-purchase services",
+      "url": "https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/",
+      "category": "news"
+    },
+    {
+      "title": "Walmart × Google: shopping within Gemini",
+      "meta": "Company source · 2026-01-11 · Walmart and Sam's Club products connected through UCP",
+      "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+      "category": "news"
+    },
+    {
+      "title": "Amazon: Agent Policy effective March 4, 2026",
+      "meta": "Company source · External agents must identify themselves, comply with policies, and stop access when requested",
+      "url": "https://sellercentral.amazon.com/seller-forums/discussions/t/84e3f6b1-42f7-4cf3-a189-a5cc8d78d838",
+      "category": "news"
+    },
+    {
+      "title": "Amazon Seller Assistant",
+      "meta": "Company source · The saved September 8, 2026 record reports 230,000 monthly users and an acceptance rate above 90%",
+      "url": "https://sellingpartners.aboutamazon.com/seller-assistant",
+      "category": "news"
+    },
+    {
+      "title": "Shopify: Agentic Storefronts",
+      "meta": "Company source · 2026-03-24 · Millions of merchants can reach major AI channels",
+      "url": "https://www.shopify.com/news/agentic-commerce-momentum",
+      "category": "news"
+    },
+    {
+      "title": "Shopify opens agentic commerce to developers",
+      "meta": "Company source · 2026-06-17 · UCP and Catalog API access no longer requires approval",
+      "url": "https://www.shopify.com/news/spring-26-edition-dev",
+      "category": "news"
+    },
+    {
+      "title": "OpenAI expands product discovery and ACP in ChatGPT",
+      "meta": "Company source · 2026-03-24 · Product comparisons and high-intent traffic move into conversational interfaces",
+      "url": "https://openai.com/index/powering-product-discovery-in-chatgpt/",
+      "category": "news"
+    },
+    {
+      "title": "Visa launches Intelligent Commerce Connect",
+      "meta": "Company source · 2026-04-08 · A payment access layer for merchants and agents",
+      "url": "https://investor.visa.com/news/news-details/2026/Visa-Opens-the-Door-to-AI-Driven-Shopping-for-Businesses-Worldwide/",
+      "category": "news"
+    },
+    {
+      "title": "Google transfers AP2 to the FIDO Alliance",
+      "meta": "Company source · 2026-04-28 · Toward platform-neutral agent payment protocols",
+      "url": "https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/",
+      "category": "news"
+    },
+    {
+      "title": "FTC consultation on personalized pricing enforcement",
+      "meta": "Regulatory source · Updated 2026-08-31 · Comment deadline: 2026-09-18",
+      "url": "https://www.ftc.gov/news-events/news/press-releases/2026/08/ftc-seeks-comment-enforcement-policy-statement-regarding-personalized-pricing",
+      "category": "news"
+    },
+    {
+      "title": "European Commission: AI transparency requirements",
+      "meta": "Regulatory source · The saved record dates application of new transparency requirements to 2026-08-02",
+      "url": "https://commission.europa.eu/topics/artificial-intelligence_en",
+      "category": "news"
+    },
+    {
+      "title": "Teh (2022), Platform Governance",
+      "meta": "AEJ: Microeconomics · How platform rules, information, and recommendations affect seller competition",
+      "url": "https://www.aeaweb.org/articles?id=10.1257/mic.20190307",
+      "category": "literature"
+    },
+    {
+      "title": "Calvano et al. (2020), AI, Algorithmic Pricing, and Collusion",
+      "meta": "American Economic Review · Algorithms may learn to sustain supracompetitive prices",
+      "url": "https://www.aeaweb.org/articles?id=10.1257/aer.20190623",
+      "category": "literature"
+    },
+    {
+      "title": "Brown & MacKay (2023), Competition in Pricing Algorithms",
+      "meta": "AEJ: Microeconomics · Automated responses and pricing frequency affect competition",
+      "url": "https://www.nber.org/papers/w28860",
+      "category": "literature"
+    },
+    {
+      "title": "Greiner et al. (2025), Reliance on Algorithmic Advice",
+      "meta": "Management Science · Incentives and framing affect managers' reliance on algorithmic advice",
+      "url": "https://pubsonline.informs.org/doi/10.1287/mnsc.2022.02777",
+      "category": "literature"
+    },
+    {
+      "title": "Keppo et al. (2026), Trusting AI in Competitive Markets",
+      "meta": "arXiv preprint · AI pricing advice, trust learning, and competitive outcomes; closely related to generic pricing questions",
+      "url": "https://arxiv.org/abs/2608.26539",
+      "category": "literature"
+    }
+  ],
+  "stages": [
+    {
+      "id": "event",
+      "nav": "News Radar",
+      "meta": "11 → 1",
+      "agent": "intelligence",
+      "kicker": "2026 NEWS WATCHLIST",
+      "title": "News watchlist: 11 changes worth following",
+      "summary": "Open protocols, platform access, agent payments, personalized pricing, and AI transparency. Each item links to a company or regulatory source recorded in the original run.",
+      "callout": "Selected comparison: Amazon and Shopify combine in-house capabilities, third-party access, and permission controls differently. Neither is simply fully open or fully closed.",
+      "sourceCategory": "news",
+      "evidenceTitle": "News sources",
+      "cards": [
+        {
+          "title": "Google introduces the Universal Commerce Protocol",
+          "source": "Google",
+          "date": "2026-01-11",
+          "url": "https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/",
+          "text": "Google, with Shopify, Etsy, Wayfair, Target, and Walmart, introduces an open commerce protocol covering discovery, purchasing, and post-purchase services, compatible with A2A, AP2, and MCP.",
+          "signal": "Could control over open standards redistribute bargaining power among platforms, merchants, and payment providers?",
+          "tags": [
+            "Open protocols",
+            "Ecosystem governance"
+          ],
+          "score": 88
+        },
+        {
+          "title": "Walmart products enter Gemini",
+          "source": "Walmart",
+          "date": "2026-01-11",
+          "url": "https://corporate.walmart.com/news/2026/01/11/walmart-and-google-turn-ai-discovery-into-effortless-shopping-experiences",
+          "text": "Walmart and Sam's Club products are set to enter Gemini through UCP, moving the shopping entry point from retail websites to a general-purpose AI interface.",
+          "signal": "When transactions begin on an AI platform, who controls customer relationships, recommendations, and data?",
+          "tags": [
+            "Channel shift",
+            "Recommendation control"
+          ],
+          "score": 84
+        },
+        {
+          "title": "Amazon's Agent Policy takes effect",
+          "source": "Amazon",
+          "date": "2026-03-04",
+          "url": "https://sellercentral.amazon.com/seller-forums/discussions/t/84e3f6b1-42f7-4cf3-a189-a5cc8d78d838",
+          "text": "Amazon requires automated agents accessing services on sellers' behalf to identify themselves and comply with policies; it may require them to stop accessing its services.",
+          "signal": "When do platforms treat third-party agents as complementary innovators, and when as entrants requiring control?",
+          "tags": [
+            "Access rules",
+            "Platform control",
+            "Selected"
+          ],
+          "score": 93
+        },
+        {
+          "title": "Amazon expands Seller Assistant",
+          "source": "Amazon",
+          "date": "2026-09-08",
+          "url": "https://sellingpartners.aboutamazon.com/seller-assistant",
+          "text": "Amazon reports that Seller Assistant supports operational advice, diagnosis, and action planning, with 230,000 monthly users in the saved source record.",
+          "signal": "When a platform both sets market rules and advises sellers, are its objectives aligned with sellers' interests?",
+          "tags": [
+            "In-house agents",
+            "Agency conflict",
+            "Selected"
+          ],
+          "score": 94
+        },
+        {
+          "title": "Shopify launches Agentic Storefronts",
+          "source": "Shopify",
+          "date": "2026-03-24",
+          "url": "https://www.shopify.com/news/agentic-commerce-momentum",
+          "text": "Shopify connects millions of merchants' products, inventory, and prices to AI channels such as ChatGPT while retaining merchant fulfillment relationships.",
+          "signal": "Does access to multiple AI channels increase merchant reach or create new dependence on intermediaries?",
+          "tags": [
+            "Multiple channels",
+            "Merchant relationships",
+            "Selected"
+          ],
+          "score": 90
+        },
+        {
+          "title": "Shopify opens UCP and the Catalog API",
+          "source": "Shopify",
+          "date": "2026-06-17",
+          "url": "https://www.shopify.com/news/spring-26-edition-dev",
+          "text": "Developers can use UCP and the Catalog API without applying for approval and submit agent profiles through a public MCP endpoint.",
+          "signal": "Can lower entry barriers support specialized agents and pressure closed platforms to change their policies?",
+          "tags": [
+            "Developer access",
+            "Ecosystem innovation",
+            "Selected"
+          ],
+          "score": 92
+        },
+        {
+          "title": "ChatGPT expands product discovery and comparison",
+          "source": "OpenAI",
+          "date": "2026-03-24",
+          "url": "https://openai.com/index/powering-product-discovery-in-chatgpt/",
+          "text": "ChatGPT extends ACP to product discovery, supporting visual browsing, side-by-side comparisons, and more timely product information.",
+          "signal": "How could AI-interface rankings affect brand exposure, price competition, and search advertising?",
+          "tags": [
+            "Product discovery",
+            "Ranking rules"
+          ],
+          "score": 86
+        },
+        {
+          "title": "Visa launches Intelligent Commerce Connect",
+          "source": "Visa",
+          "date": "2026-04-08",
+          "url": "https://investor.visa.com/news/news-details/2026/Visa-Opens-the-Door-to-AI-Driven-Shopping-for-Businesses-Worldwide/",
+          "text": "Visa offers an access layer for agent developers, merchants, and payment providers and begins initial partner pilots.",
+          "signal": "Could identity, authorization, and payment liability become bottlenecks or entry barriers in agentic commerce?",
+          "tags": [
+            "Agent payments",
+            "Trust infrastructure"
+          ],
+          "score": 82
+        },
+        {
+          "title": "Google transfers AP2 to the FIDO Alliance",
+          "source": "Google",
+          "date": "2026-04-28",
+          "url": "https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/",
+          "text": "Google transfers governance of the Agent Payments Protocol to the FIDO Alliance and adds authorization capabilities for unattended transactions.",
+          "signal": "Why would a firm relinquish protocol control? Could neutral governance accelerate ecosystem adoption?",
+          "tags": [
+            "Standards governance",
+            "Platform neutrality"
+          ],
+          "score": 85
+        },
+        {
+          "title": "EU AI transparency requirements begin to apply",
+          "source": "European Commission",
+          "date": "2026-08-02",
+          "url": "https://commission.europa.eu/topics/artificial-intelligence_en",
+          "text": "The saved record describes transparency requirements for specified AI systems and AI-generated content, with implications for interfaces and disclosure design.",
+          "signal": "Does disclosing AI involvement improve trust or reduce advice adoption and conversion?",
+          "tags": [
+            "Policy implementation",
+            "Disclosure"
+          ],
+          "score": 78
+        },
+        {
+          "title": "FTC seeks comments on personalized pricing enforcement",
+          "source": "FTC",
+          "date": "2026-08-31",
+          "url": "https://www.ftc.gov/news-events/news/press-releases/2026/08/ftc-seeks-comment-enforcement-policy-statement-regarding-personalized-pricing",
+          "text": "The saved record describes an FTC consultation on potential legal risks from undisclosed use of personal data in personalized pricing, with comments due September 18, 2026.",
+          "signal": "How does regulatory uncertainty affect firms' use of consumer data and personalized prices?",
+          "tags": [
+            "Regulatory signal",
+            "Personalized pricing"
+          ],
+          "score": 81
+        }
+      ]
+    },
+    {
+      "id": "generate",
+      "nav": "Mechanisms",
+      "meta": "1 → 6",
+      "agent": "generation",
+      "kicker": "6 CANDIDATE MECHANISMS",
+      "title": "What conditions favor each governance mode?",
+      "summary": "Six candidate mechanisms predict in-house provision, open access, or selective access.",
+      "callout": "The question is not simply open versus closed: it is how platforms balance control benefits, external innovation, and safety risks.",
+      "sourceCategory": "news",
+      "evidenceTitle": "Event evidence",
+      "cards": [
+        {
+          "title": "H1 · Data advantages favor in-house provision",
+          "text": "More distinctive transaction, fulfillment, and user data may improve an in-house agent's predictions and strengthen the incentive to retain decision capabilities internally.",
+          "tags": [
+            "Prediction: in-house",
+            "Data advantage"
+          ],
+          "score": 91
+        },
+        {
+          "title": "H2 · Complementary-service profits favor in-house provision",
+          "text": "When advertising, logistics, or payment services are profitable, an in-house agent can coordinate recommendations and service adoption, potentially favoring internal provision.",
+          "tags": [
+            "Prediction: in-house",
+            "Incentive alignment"
+          ],
+          "score": 89
+        },
+        {
+          "title": "H3 · External innovation favors open access",
+          "text": "Greater third-party expertise and innovation efficiency increase the value of tool variety and may favor access by multiple agents.",
+          "tags": [
+            "Prediction: open",
+            "Ecosystem innovation"
+          ],
+          "score": 92
+        },
+        {
+          "title": "H4 · Merchant heterogeneity favors open access",
+          "text": "A single platform agent may struggle to serve heterogeneous needs. Specialized third-party agents can match different industries, firm sizes, and operating objectives.",
+          "tags": [
+            "Prediction: open",
+            "Specialization"
+          ],
+          "score": 87
+        },
+        {
+          "title": "H5 · Risk favors selective access",
+          "text": "When external innovation is valuable but execution errors, data leakage, and liability are substantial, certification, tiered permissions, and audits may outperform either unrestricted access or exclusive in-house provision.",
+          "tags": [
+            "Prediction: selective",
+            "Safety governance"
+          ],
+          "score": 94
+        },
+        {
+          "title": "H6 · Platform competition favors openness commitments",
+          "text": "When platforms compete for merchants, admitting third-party agents may credibly reduce lock-in, expand choice, and attract merchants.",
+          "tags": [
+            "Prediction: open",
+            "Platform competition"
+          ],
+          "score": 84
+        }
+      ]
+    },
+    {
+      "id": "cluster",
+      "nav": "Research Map",
+      "meta": "6 → 3 trade-offs",
+      "agent": "proximity",
+      "kicker": "3 RESEARCH DIRECTIONS",
+      "title": "Three trade-offs shape governance choices",
+      "summary": "Control and internalization, ecosystem innovation and matching, and safety and liability are three dimensions of institutional choice.",
+      "callout": "Selective access is a distinct regime: certification, permissions, and audits enable external innovation while retaining key controls.",
+      "sourceCategory": "news",
+      "evidenceTitle": "Event evidence",
+      "cards": [
+        {
+          "title": "Trade-off A · Control and internalization",
+          "text": "Data advantages and complementary-service profits raise the value of in-house provision and control over agent objectives, default recommendations, and data feedback.",
+          "tags": [
+            "H1",
+            "H2",
+            "In-house"
+          ],
+          "score": 93
+        },
+        {
+          "title": "Trade-off B · Innovation and ecosystem scale",
+          "text": "Third-party innovation, specialized matching, and competition for merchants raise the value of openness. A platform trades some control for a richer ecosystem.",
+          "tags": [
+            "H3",
+            "H4",
+            "H6",
+            "Open"
+          ],
+          "score": 95
+        },
+        {
+          "title": "Trade-off C · Risk and reliable execution",
+          "text": "Operational errors, privacy breaches, and liability raise the cost of access. Certification and tiered permissions screen third parties while preserving innovation.",
+          "tags": [
+            "H5",
+            "Selective"
+          ],
+          "score": 94
+        },
+        {
+          "title": "Unifying question",
+          "text": "When does a platform choose in-house provision, open access, or selective access? Compare control benefits, innovation value, and risk-management capabilities across regimes.",
+          "tags": [
+            "Institutional choice",
+            "Three regimes"
+          ],
+          "score": 97
+        }
+      ]
+    },
+    {
+      "id": "literature",
+      "nav": "Literature",
+      "meta": "5 related papers",
+      "agent": "literature",
+      "kicker": "5 CLOSEST PAPERS",
+      "title": "From related findings to a provisional research question",
+      "summary": "Platform governance, algorithmic pricing, and advice adoption have close precedents. Price effects or adoption alone may offer limited novelty.",
+      "callout": "Provisional opportunity: compare in-house provision, open access, and selective access in one model of endogenous platform governance. This is a search-dependent conjecture, not an established gap.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Related literature",
+      "cards": [
+        {
+          "title": "Teh (2022) · Platform Governance",
+          "text": "The saved audit connects this paper's account of rules, information, and recommendations to seller competition. It proposes agent provision and certified access as a possible extension requiring further overlap checks.",
+          "tags": [
+            "Conceptual neighbor",
+            "Moderate overlap"
+          ],
+          "score": 72
+        },
+        {
+          "title": "Calvano et al. (2020) · Algorithmic Pricing",
+          "text": "Autonomous pricing algorithms can sustain supracompetitive prices. Price convergence or collusion alone is therefore unlikely to establish a distinctive contribution.",
+          "tags": [
+            "Mechanism neighbor",
+            "High overlap"
+          ],
+          "score": 43
+        },
+        {
+          "title": "Brown & MacKay (2023) · Pricing Algorithms",
+          "text": "Automated responses and pricing frequency affect price levels and dispersion. Changes in prices following openness are outcomes to explain, not by themselves a novel contribution.",
+          "tags": [
+            "Empirical neighbor",
+            "High overlap"
+          ],
+          "score": 46
+        },
+        {
+          "title": "Greiner et al. (2025) · Algorithmic Advice",
+          "text": "Incentive contracts and the framing of AI affect managers' adoption of advice. The saved audit treats this as a foundation for seller reliance and flags the advice provider's strategic objectives for closer comparison.",
+          "tags": [
+            "Behavioral neighbor",
+            "Potential connection"
+          ],
+          "score": 76
+        },
+        {
+          "title": "Keppo et al. (2026) · Trusting AI in Competitive Markets",
+          "text": "This preprint is recorded as directly studying AI pricing advice, trust learning, and competition. The original audit therefore rejects a generic question about whether AI advice changes prices.",
+          "tags": [
+            "Preprint",
+            "Requires reframing"
+          ],
+          "score": 38
+        },
+        {
+          "title": "Provisional differentiation",
+          "text": "The original search did not identify a paper directly modeling endogenous choice among all three regimes. This is a preliminary search result, not proof of novelty; a dedicated follow-up search remains necessary.",
+          "tags": [
+            "Three-regime choice",
+            "Conditional gap"
+          ],
+          "score": 84
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "nav": "Peer Review",
+      "meta": "6 concerns",
+      "agent": "reflection",
+      "kicker": "6 REVIEWER CONCERNS",
+      "title": "Reviewer: governance is endogenous and multidimensional",
+      "summary": "Key concerns include regime classification, platform heterogeneity, bundled policies, data visibility, and what agents add beyond ordinary recommendation systems.",
+      "callout": "Amazon and Shopify cannot be treated as closed and open treatment groups. Both may use mixed governance, and their choices reflect their own characteristics.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Review context",
+      "cards": [
+        {
+          "title": "Major 1 · Open versus closed is insufficient",
+          "text": "A platform may provide its own agent, open some interfaces, and restrict high-risk actions simultaneously. Define governance through entry, data, permissions, review, and liability.",
+          "tags": [
+            "Construct definition",
+            "Major"
+          ],
+          "score": 18
+        },
+        {
+          "title": "Major 2 · Governance is endogenous",
+          "text": "Data advantages, revenue models, merchant heterogeneity, and risk exposure jointly affect governance and outcomes. Cross-platform differences alone do not identify causal effects.",
+          "tags": [
+            "Endogenous choice",
+            "Major"
+          ],
+          "score": 16
+        },
+        {
+          "title": "Major 3 · Policies change together",
+          "text": "Agent-access changes often coincide with recommendation, payment, advertising, or data-policy changes. A single event may not isolate the effect of governance.",
+          "tags": [
+            "Bundled policies",
+            "Identification"
+          ],
+          "score": 25
+        },
+        {
+          "title": "Major 4 · Key behavior is unobserved",
+          "text": "External researchers typically cannot observe agent advice, permissions, adoption, or execution logs. An empirical study may require a data partnership or an experimental alternative.",
+          "tags": [
+            "Data access",
+            "Major"
+          ],
+          "score": 28
+        },
+        {
+          "title": "Alternative explanation · Safety, not self-preferencing",
+          "text": "Restrictions may prevent execution errors, data leakage, and spillover liability. The model must allow genuine safety benefits rather than assume the platform's motives.",
+          "tags": [
+            "Competing mechanism",
+            "Retain"
+          ],
+          "score": 91
+        },
+        {
+          "title": "Feasible revision",
+          "text": "Use a three-regime theoretical model to explain governance choice, then controlled experiments to test objective conflicts and permission design. Platform news motivates the question but does not identify causal effects.",
+          "tags": [
+            "Theory + experiment",
+            "Retain"
+          ],
+          "score": 92
+        }
+      ]
+    },
+    {
+      "id": "rank",
+      "nav": "Idea Ranking",
+      "meta": "4 → 1",
+      "agent": "ranking",
+      "kicker": "4 IDEAS · 1 SURVIVES",
+      "title": "Governance choice ranks first among four candidates",
+      "summary": "The three-regime question combines observed variation with theoretical trade-offs and candidate comparative statics. Price and capability effects become secondary outcomes.",
+      "callout": "Ask why platforms choose different institutions; do not interpret cross-platform outcome differences as causal effects of openness.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Comparison context",
+      "cards": [
+        {
+          "title": "#1 In-house, open, or selective access?",
+          "text": "A common model of platform control, ecosystem innovation, and safety risk could yield distinct equilibrium regimes and testable shifts in their boundaries.",
+          "tags": [
+            "Retain",
+            "Conditional go"
+          ],
+          "score": 91
+        },
+        {
+          "title": "#2 How do an agent provider's objectives shape advice?",
+          "text": "Objective conflicts are clear and experimentally tractable, but explain downstream consequences rather than the platform's choice of regime.",
+          "tags": [
+            "Retain as mechanism",
+            "Experimental fit"
+          ],
+          "score": 78
+        },
+        {
+          "title": "#3 Does openness narrow merchant capability gaps?",
+          "text": "The managerial relevance is clear, but adoption and developer entry are endogenous. Treat this as an extension involving merchant heterogeneity.",
+          "tags": [
+            "Extension",
+            "Data challenge"
+          ],
+          "score": 69
+        },
+        {
+          "title": "#4 Does AI advice lead to price convergence?",
+          "text": "Testable, but closely related to algorithmic pricing, competitive responses, and trust in AI advice. Do not retain it as the core question.",
+          "tags": [
+            "Reject",
+            "High literature overlap"
+          ],
+          "score": 48
+        }
+      ]
+    },
+    {
+      "id": "evolve",
+      "nav": "Idea Card",
+      "meta": "Conditional go",
+      "agent": "evolution",
+      "kicker": "CONDITIONAL GO",
+      "title": "Proposed study: platform choice of agent governance",
+      "summary": "The object of study is the platform's choice among three regimes. Amazon and Shopify motivate the question rather than identify its causal effects.",
+      "callout": "CONDITIONAL GO: first test whether a three-regime model yields distinct equilibrium regions; only then commit to data collection or experiments.",
+      "sourceCategory": "literature",
+      "evidenceTitle": "Core references",
+      "cards": [
+        {
+          "title": "Research puzzle",
+          "text": "Under what conditions does a platform choose in-house agents, open third-party access, or selective access? How do these regimes distribute value among platforms, developers, and merchants?",
+          "tags": [
+            "Institutional choice",
+            "Three regimes"
+          ],
+          "score": 97
+        },
+        {
+          "title": "Three candidate regimes",
+          "text": "In-house: the platform controls the model, data, and permissions. Open: eligible developers may enter freely. Selective: certification, tiered permissions, and audits screen third-party agents.",
+          "tags": [
+            "In-house",
+            "Open",
+            "Selective"
+          ],
+          "score": 96
+        },
+        {
+          "title": "Minimal theoretical model",
+          "text": "Stage 1: the platform selects governance. Stage 2: third parties decide whether to enter and invest in innovation. Stage 3: merchants select agents and act. Platform payoffs include transactions, complementary services, and data, net of governance and safety costs.",
+          "tags": [
+            "Three-stage game",
+            "Endogenous entry"
+          ],
+          "score": 92
+        },
+        {
+          "title": "Conjectured regime predictions",
+          "text": "Data advantages or complementary-service profits may favor in-house provision; third-party innovation or merchant heterogeneity may favor openness. Valuable innovation with high risk and effective screening may favor selective access. These predictions remain to be derived.",
+          "tags": [
+            "Comparative statics",
+            "Falsifiable"
+          ],
+          "score": 94
+        },
+        {
+          "title": "Conjectured downstream predictions",
+          "text": "Holding information and accuracy fixed, in-house agents may recommend more platform services; open access may increase specialization; selective access may reduce tail risks but also discourage third-party investment.",
+          "tags": [
+            "Seller behavior",
+            "Innovation incentives"
+          ],
+          "score": 89
+        },
+        {
+          "title": "Research design",
+          "text": "Use theory to explain regime choice. Randomize the agent provider, objective alignment, and execution permissions in controlled experiments to test downstream mechanisms. Platform news provides motivation, not cross-platform causal identification.",
+          "tags": [
+            "Theoretical model",
+            "Controlled experiment"
+          ],
+          "score": 91
+        },
+        {
+          "title": "No-go checks",
+          "text": "Stop if the regimes do not produce distinct equilibrium regions, agents introduce no delegation or execution features beyond ordinary APIs or recommendations, or a dedicated search finds the same institutional-choice problem already fully studied.",
+          "tags": [
+            "Stopping rules",
+            "Further literature audit"
+          ],
+          "score": 95
+        }
+      ]
+    }
+  ]
+};
+
+    let run = demoRun;
+    let defaultRun = demoRun;
+    let activeStage = 0;
+    let timer = null;
+
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+
+
+    const safeUrl = value => {
+      try { const url = new URL(value); return ["http:", "https:"].includes(url.protocol) ? url.href : ""; }
+      catch { return ""; }
+    };
+    function validateRun(value) {
+      const isText = x => typeof x === "string";
+      if (!value || !value.meta || !isText(value.meta.title) || !isText(value.meta.state) ||
+          !Array.isArray(value.agents) || !value.agents.length ||
+          !Array.isArray(value.metrics) || !Array.isArray(value.sources) ||
+          !Array.isArray(value.stages) || !value.stages.length) {
+        throw new Error("Expected metadata, agents, metrics, sources, and at least one stage.");
+      }
+      if (!value.agents.every(x => x && isText(x.id) && isText(x.name)) ||
+          !value.metrics.every(x => x && isText(x.label)) ||
+          !value.sources.every(x => x && isText(x.title)) ||
+          !value.stages.every(x => x && isText(x.title) && isText(x.nav) &&
+            value.agents.some(a => a.id === x.agent) && Array.isArray(x.cards) &&
+            x.cards.every(c => c && isText(c.title) && isText(c.text) &&
+              (c.tags === undefined || (Array.isArray(c.tags) && c.tags.every(isText)))))) {
+        throw new Error("Invalid stage, agent, card, metric, or source fields.");
+      }
+      return value;
+    }
+
+    function renderNav() {
+      const nav = document.getElementById("statusline");
+      nav.innerHTML = run.stages.map((stage, index) => `
+        <button class="step ${index === activeStage ? "active" : ""} ${index < activeStage ? "done" : ""}" data-index="${index}" data-num="${index + 1}">
+          <span class="step-label">${esc(stage.nav)}</span>
+          <span class="step-meta">${esc(stage.meta)}</span>
+        </button>`).join("");
+      nav.querySelectorAll(".step").forEach(button => button.addEventListener("click", () => {
+        stopPlayback();
+        activeStage = Number(button.dataset.index);
+        render();
+      }));
+    }
+
+    function renderAgents() {
+      const stage = run.stages[activeStage];
+      document.getElementById("agentCount").textContent = `${run.agents.length} roles`;
+      document.getElementById("agents").innerHTML = run.agents.map((agent, index) => {
+        const current = agent.id === stage.agent;
+        const firstStage = run.stages.findIndex(item => item.agent === agent.id);
+        const completed = firstStage >= 0 && firstStage < activeStage;
+        return `<div class="agent ${current ? "current" : ""}">
+          <div class="agent-icon">${esc(agent.icon || String(index + 1))}</div>
+          <div><div class="agent-name">${esc(agent.name)}</div><div class="agent-status">${current ? "Current stage" : completed ? "Reviewed" : esc(agent.role)}</div></div>
+        </div>`;
+      }).join("");
+    }
+
+    function renderStage() {
+      const stage = run.stages[activeStage];
+      const cards = stage.cards.map(card => {
+        const title = safeUrl(card.url)
+          ? `<a href="${esc(safeUrl(card.url))}" target="_blank" rel="noopener noreferrer">${esc(card.title)} ↗</a>`
+          : esc(card.title);
+        const meta = [card.source, card.date].filter(Boolean).map(esc).join(" · ");
+        return `
+        <section class="card">
+          <h3>${title}</h3>
+          ${meta ? `<div class="card-meta">${meta}</div>` : ""}
+          <p>${esc(card.text)}</p>
+          ${card.signal ? `<div class="research-signal"><strong>Research signal: </strong>${esc(card.signal)}</div>` : ""}
+          <div class="meta-row">${(card.tags || []).map(tag => `<span class="tag">${esc(tag)}</span>`).join("")}</div>
+          <div class="scoreline"><div class="bar"><span style="width:${Math.max(0, Math.min(100, Number(card.score) || 0))}%"></span></div><span class="score">${esc(card.score)}</span></div>
+        </section>`;
+      }).join("");
+      document.getElementById("stageBody").innerHTML = `<div class="fade">
+        <div class="stage-kicker">${esc(stage.kicker)}</div>
+        <h2 class="stage-title">${esc(stage.title)}</h2>
+        <p class="stage-summary">${esc(stage.summary)}</p>
+        ${stage.callout ? `<div class="callout">${esc(stage.callout)}</div>` : ""}
+        <div class="card-grid">${cards}</div>
+      </div>`;
+    }
+
+    function renderEvidence() {
+      const stage = run.stages[activeStage];
+      const visibleSources = stage.sourceCategory
+        ? run.sources.filter(source => source.category === stage.sourceCategory)
+        : run.sources;
+      document.getElementById("evidenceTitle").textContent = stage.evidenceTitle || "Related sources";
+      document.getElementById("metrics").innerHTML = run.metrics.map(item => `<div class="metric"><div class="metric-value">${esc(item.value)}</div><div class="metric-label">${esc(item.label)}</div></div>`).join("");
+      document.getElementById("sources").innerHTML = visibleSources.map(source => {
+        const title = safeUrl(source.url)
+          ? `<a href="${esc(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">${esc(source.title)}</a>`
+          : esc(source.title);
+        return `<div class="source"><div class="source-title">${title}</div><div class="source-meta">${esc(source.meta)}</div></div>`;
+      }).join("");
+    }
+
+    function render() {
+      document.getElementById("runTitle").textContent = run.meta.title;
+      document.getElementById("runState").textContent = run.meta.state;
+      renderNav();
+      renderAgents();
+      renderStage();
+      renderEvidence();
+    }
+
+    function stopPlayback() {
+      if (timer) clearInterval(timer);
+      timer = null;
+      document.getElementById("playBtn").textContent = "▶ Play walkthrough";
+    }
+
+    function startPlayback() {
+      if (timer) { stopPlayback(); return; }
+      document.getElementById("playBtn").textContent = "Ⅱ Pause";
+      timer = setInterval(() => {
+        if (activeStage >= run.stages.length - 1) { stopPlayback(); return; }
+        activeStage += 1;
+        render();
+      }, 6500);
+    }
+
+    document.getElementById("playBtn").addEventListener("click", startPlayback);
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      stopPlayback();
+      run = defaultRun;
+      activeStage = 0;
+      render();
+    });
+    document.getElementById("fileInput").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const imported = validateRun(JSON.parse(reader.result));
+          stopPlayback();
+          run = imported;
+          activeStage = 0;
+          render();
+        } catch (error) {
+          alert(`Unable to import: ${error.message}`);
+        }
+      };
+      reader.readAsText(file, "utf-8");
+      event.target.value = "";
+    });
+
+    async function loadDefaultRun() {
+      try {
+        const response = await fetch("run-latest.json", { cache: "no-store" });
+        if (response.ok) {
+          const latest = validateRun(await response.json());
+          if (latest.meta && Array.isArray(latest.agents) && Array.isArray(latest.stages)) {
+            run = latest;
+            defaultRun = latest;
+          }
+        }
+      } catch (_) {
+        // Direct file opening cannot fetch neighboring files in some browsers;
+        // the embedded demonstration remains available in that case.
+      }
+      render();
+    }
+
+    loadDefaultRun();
+  </script>
+</body>
+</html>

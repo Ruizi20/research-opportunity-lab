@@ -1,0 +1,174 @@
+{
+  "project_name": "Event-driven Research Opportunity Radar",
+  "research_scope": {
+    "focus": "How AI and digital technologies change pricing, procurement, supply chains, and platform governance",
+    "include_topics": [
+      "AI pricing and algorithmic competition",
+      "AI procurement, negotiation, and supplier management",
+      "Platform rules, channel governance, and ecosystem control",
+      "Effects of AI adoption on firm heterogeneity, labor, and consumers",
+      "Supply-chain shocks, resilience, and digital decision-making"
+    ],
+    "exclude_topics": [
+      "Product announcements without observable organizational or market changes",
+      "Opinion pieces without identifiable event dates",
+      "Model-performance claims without a management mechanism",
+      "Rumors with no traceable original source"
+    ],
+    "regions": [
+      "China",
+      "United States",
+      "European Union",
+      "Global"
+    ],
+    "languages": [
+      "Chinese",
+      "English"
+    ],
+    "lookback_days": 30
+  },
+  "source_baskets": [
+    {
+      "id": "policy_and_regulation",
+      "priority": 1,
+      "materials": [
+        "Laws and regulations",
+        "Regulatory decisions",
+        "Consultation drafts",
+        "Enforcement notices",
+        "Implementation guidance"
+      ],
+      "preferred_sources": [
+        "Government and regulator websites",
+        "Original legal texts",
+        "Official press releases"
+      ],
+      "required_fields": [
+        "announcement_date",
+        "effective_date",
+        "jurisdiction",
+        "affected_entities",
+        "primary_url"
+      ]
+    },
+    {
+      "id": "platform_and_company_change",
+      "priority": 1,
+      "materials": [
+        "Platform rule updates",
+        "Phased feature rollouts",
+        "Price or commission changes",
+        "Procurement and supply-chain changes",
+        "Business-model changes"
+      ],
+      "preferred_sources": [
+        "Company announcements",
+        "Investor relations",
+        "Product or policy documentation",
+        "Earnings reports and calls"
+      ],
+      "required_fields": [
+        "announcement_date",
+        "implementation_date",
+        "before_after",
+        "affected_entities",
+        "primary_url"
+      ]
+    },
+    {
+      "id": "external_shock",
+      "priority": 2,
+      "materials": [
+        "Strikes",
+        "Port or route disruptions",
+        "Sanctions and tariffs",
+        "Recalls",
+        "Data breaches",
+        "Service outages",
+        "Natural disasters"
+      ],
+      "preferred_sources": [
+        "Responsible authorities",
+        "Company announcements",
+        "Reputable news organizations"
+      ],
+      "required_fields": [
+        "event_date",
+        "affected_area",
+        "exposure_variation",
+        "observable_outcomes",
+        "source_urls"
+      ]
+    },
+    {
+      "id": "anomaly_and_outcome",
+      "priority": 2,
+      "materials": [
+        "Unusual price, sales, or employment changes",
+        "Policy or technology effects contrary to expectations",
+        "Divergent firm outcomes"
+      ],
+      "preferred_sources": [
+        "Official statistics",
+        "Company disclosures",
+        "Industry databases",
+        "Reports with transparent methods"
+      ],
+      "required_fields": [
+        "metric",
+        "baseline",
+        "observed_change",
+        "measurement_method",
+        "source_url"
+      ]
+    },
+    {
+      "id": "frontier_signal",
+      "priority": 3,
+      "materials": [
+        "Working papers",
+        "Conference programs",
+        "Conflicting findings",
+        "New institutions challenging existing assumptions"
+      ],
+      "preferred_sources": [
+        "Journal websites",
+        "Conference websites",
+        "NBER",
+        "SSRN",
+        "CEPR",
+        "arXiv",
+        "Author websites"
+      ],
+      "required_fields": [
+        "title",
+        "authors",
+        "date",
+        "abstract_or_claim",
+        "url"
+      ]
+    }
+  ],
+  "event_scoring": {
+    "source_reliability": 20,
+    "discrete_change_and_timing": 20,
+    "variation_or_comparison_group": 15,
+    "observable_outcomes": 15,
+    "theoretical_tension": 15,
+    "substantive_importance": 15
+  },
+  "hard_gates": [
+    "Require an accessible primary source or explicitly label primary evidence as unavailable",
+    "Separate announcement, implementation, and observed-outcome dates",
+    "Describe the before/after change",
+    "Identify potential data traces and access barriers",
+    "Separate facts, inferences, and unknowns"
+  ],
+  "output": {
+    "language": "English",
+    "initial_candidate_limit": 20,
+    "shortlist_limit": 8,
+    "final_event_limit": 3,
+    "minimum_score": 60
+  }
+}

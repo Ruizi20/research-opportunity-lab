@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "title": "Title of this research run",
+    "state": "Live research run or illustrative example — specify which",
+    "scope": "Research topic",
+    "window": "Evidence collection period",
+    "language": "en"
+  },
+  "agents": [
+    {
+      "id": "intelligence",
+      "icon": "01",
+      "name": "News Radar",
+      "role": "Event count"
+    },
+    {
+      "id": "generation",
+      "icon": "02",
+      "name": "Mechanism Candidates",
+      "role": "Mechanism count"
+    },
+    {
+      "id": "proximity",
+      "icon": "03",
+      "name": "Research Map",
+      "role": "Direction count"
+    },
+    {
+      "id": "literature",
+      "icon": "04",
+      "name": "Related Literature",
+      "role": "Related-paper count"
+    },
+    {
+      "id": "reflection",
+      "icon": "05",
+      "name": "Adversarial Review",
+      "role": "Concern count"
+    },
+    {
+      "id": "ranking",
+      "icon": "06",
+      "name": "Idea Ranking",
+      "role": "Candidate count"
+    },
+    {
+      "id": "evolution",
+      "icon": "07",
+      "name": "Idea Card",
+      "role": "Recommendation count"
+    }
+  ],
+  "metrics": [
+    {
+      "value": "0",
+      "label": "News & policy"
+    },
+    {
+      "value": "0",
+      "label": "Mechanisms"
+    },
+    {
+      "value": "0",
+      "label": "Related papers"
+    },
+    {
+      "value": "0",
+      "label": "Conditional pick"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Source title",
+      "meta": "Source type · date · verification status",
+      "url": "https://example.com",
+      "category": "news"
+    }
+  ],
+  "stages": [
+    {
+      "id": "event",
+      "nav": "News Radar",
+      "meta": "Summarize this stage",
+      "agent": "intelligence",
+      "kicker": "Stage 01",
+      "title": "News watchlist",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "State the most important judgment and its limitations.",
+      "sourceCategory": "news",
+      "evidenceTitle": "Original sources",
+      "cards": [
+        {
+          "title": "Event title",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0,
+          "source": "Source organization",
+          "date": "YYYY-MM-DD",
+          "url": "https://example.com",
+          "signal": "One-sentence research signal."
+        }
+      ]
+    },
+    {
+      "id": "generate",
+      "nav": "Mechanisms",
+      "meta": "Summarize this stage",
+      "agent": "generation",
+      "kicker": "Stage 02",
+      "title": "Competing mechanisms",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "State the most important judgment and its limitations.",
+      "cards": [
+        {
+          "title": "Candidate hypothesis",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0
+        }
+      ]
+    },
+    {
+      "id": "cluster",
+      "nav": "Research Map",
+      "meta": "Summarize this stage",
+      "agent": "proximity",
+      "kicker": "Stage 03",
+      "title": "Research map",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "State the most important judgment and its limitations.",
+      "cards": [
+        {
+          "title": "Theoretical direction",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0
+        }
+      ]
+    },
+    {
+      "id": "literature",
+      "nav": "Literature",
+      "meta": "Summarize this stage",
+      "agent": "literature",
+      "kicker": "Stage 04",
+      "title": "Literature overlap",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "State the most important judgment and its limitations.",
+      "cards": [
+        {
+          "title": "Related paper",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "nav": "Peer Review",
+      "meta": "Summarize this stage",
+      "agent": "reflection",
+      "kicker": "Stage 05",
+      "title": "Reviewer objections",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "State the most important judgment and its limitations.",
+      "cards": [
+        {
+          "title": "Reviewer concern",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0
+        }
+      ]
+    },
+    {
+      "id": "rank",
+      "nav": "Idea Ranking",
+      "meta": "Summarize this stage",
+      "agent": "ranking",
+      "kicker": "Stage 06",
+      "title": "Candidate ranking",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "State the most important judgment and its limitations.",
+      "cards": [
+        {
+          "title": "Rank and candidate",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0
+        }
+      ]
+    },
+    {
+      "id": "evolve",
+      "nav": "Idea Card",
+      "meta": "Summarize this stage",
+      "agent": "evolution",
+      "kicker": "Stage 07",
+      "title": "Research Idea Card",
+      "summary": "Briefly summarize the stage output.",
+      "callout": "go, conditional_go, or no_go; state the conditions.",
+      "cards": [
+        {
+          "title": "Research puzzle",
+          "text": "Replace with evidence-backed content.",
+          "tags": [
+            "Replace with a meaningful label"
+          ],
+          "score": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "updated_at": "2026-09-12",
+  "purpose": "Priority entry points for the news radar. Verify dates, original wording, and scope on individual source pages.",
+  "sources": [
+    {
+      "name": "Amazon Selling Partner News",
+      "type": "company_primary",
+      "url": "https://sellingpartners.aboutamazon.com/",
+      "use_for": [
+        "Seller Assistant",
+        "Seller tools",
+        "FBA",
+        "Platform rules and business changes"
+      ]
+    },
+    {
+      "name": "Amazon Seller Forums - News and Announcements",
+      "type": "company_primary_with_user_comments",
+      "url": "https://sellercentral.amazon.com/seller-forums/",
+      "use_for": [
+        "Seller agreements",
+        "Policy effective dates",
+        "Agent Policy"
+      ],
+      "caution": "Only posts by official Amazon accounts count as primary company evidence; user comments are leads only."
+    },
+    {
+      "name": "Shopify Newsroom",
+      "type": "company_primary",
+      "url": "https://www.shopify.com/news",
+      "use_for": [
+        "Agentic Storefronts",
+        "Sidekick",
+        "UCP",
+        "Catalog API",
+        "Merchant tools"
+      ]
+    },
+    {
+      "name": "Google Commerce Blog",
+      "type": "company_primary",
+      "url": "https://blog.google/products/ads-commerce/",
+      "use_for": [
+        "UCP",
+        "AP2",
+        "AI shopping",
+        "Product discovery and commerce protocols"
+      ]
+    },
+    {
+      "name": "OpenAI News",
+      "type": "company_primary",
+      "url": "https://openai.com/news/",
+      "use_for": [
+        "ChatGPT shopping",
+        "ACP",
+        "Product discovery",
+        "Transaction entry points"
+      ]
+    },
+    {
+      "name": "Walmart Corporate News",
+      "type": "company_primary",
+      "url": "https://corporate.walmart.com/news/",
+      "use_for": [
+        "Sparky",
+        "Gemini shopping",
+        "Retail agents",
+        "Channel partnerships"
+      ]
+    },
+    {
+      "name": "Visa News and Solutions",
+      "type": "company_primary",
+      "url": "https://corporate.visa.com/",
+      "use_for": [
+        "Intelligent Commerce",
+        "Agent payments",
+        "Identity and authorization"
+      ]
+    },
+    {
+      "name": "US Federal Trade Commission",
+      "type": "regulator_primary",
+      "url": "https://www.ftc.gov/news-events",
+      "use_for": [
+        "Personalized pricing",
+        "Consumer protection",
+        "Platform enforcement",
+        "Public consultations"
+      ]
+    },
+    {
+      "name": "European Commission",
+      "type": "regulator_primary",
+      "url": "https://commission.europa.eu/",
+      "use_for": [
+        "AI Act",
+        "DMA",
+        "Platform regulation",
+        "Digital policy"
+      ]
+    },
+    {
+      "name": "American Economic Association",
+      "type": "academic_primary",
+      "url": "https://www.aeaweb.org/articles",
+      "use_for": [
+        "Industrial organization",
+        "Platform economics",
+        "Algorithmic competition"
+      ]
+    },
+    {
+      "name": "INFORMS PubsOnLine",
+      "type": "academic_primary",
+      "url": "https://pubsonline.informs.org/",
+      "use_for": [
+        "Operations management",
+        "Information systems",
+        "Algorithmic advice",
+        "Platform governance"
+      ]
+    },
+    {
+      "name": "NBER Working Papers",
+      "type": "academic_working_paper",
+      "url": "https://www.nber.org/papers",
+      "use_for": [
+        "Recent economics working papers",
+        "Industrial organization",
+        "Digital economy"
+      ]
+    },
+    {
+      "name": "arXiv",
+      "type": "academic_preprint",
+      "url": "https://arxiv.org/",
+      "use_for": [
+        "Recent AI and algorithm research"
+      ],
+      "caution": "Preprints have not necessarily been peer reviewed and must be labeled accordingly."
+    }
+  ]
+}
